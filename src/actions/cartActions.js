@@ -4,22 +4,22 @@ import {
   REMOVE_CART_ITEM
 } from './types.js';
 
-export function loadCardItems () {
+export function loadCartItems () {
   return {
     type: LOAD_CART_ITEMS
   };
 }
 
-export function addCardItems (item) {
+export function addCartItem (item) {
   return {
     type: ADD_CART_ITEM,
     payload: item
   };
 }
 
-export function removeCardItems (item) {
+export function removeCartItems (itemId) {
   return {
     type: REMOVE_CART_ITEM,
-    payload: item
+    payload: itemId
   };
 }

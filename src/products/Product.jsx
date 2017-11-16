@@ -8,7 +8,8 @@ const Product = ({
   image,
   price,
   deliveryStimate,
-  category
+  category, 
+  onAddItem
 }) => {
   return (
     <div className='col-xs-12 col-sm-6 col-lg-4'>
@@ -34,7 +35,9 @@ const Product = ({
           </li>
         </ul>
         <div className='card-block'>
-          <button className='btn btn-primary'>
+          <button 
+            className='btn btn-primary'
+            onClick={() => onAddItem({_id, name, desciption, image, price, deliveryStimate, category})}>
             <span className='fa fa-cart-plus'>Añadir al carrito</span>
           </button>
         </div>
@@ -50,7 +53,8 @@ Product.propTypes = {
   image: PropTypes.string,
   price: PropTypes.number,
   deliveryStimate: PropTypes.string,
-  category: PropTypes.string
+  category: PropTypes.string,
+  onAddItem: PropTypes.func.isRequired
 }
 
 export default Product;

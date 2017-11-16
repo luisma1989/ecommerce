@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import Header from './common/Header';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <header>Eccomerce</header>
+        <Header/>
         {this.props.children}
         <footer>&Copy; 2017</footer>
       </div>

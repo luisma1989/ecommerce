@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import ProductList from './ProductList';
 import * as productActions from '../actions/productActions';
 import * as cartActions from '../actions/cartActions';
+import ProductDetail from './ProductDetail';
 
-class ProductListContainer extends Component {
+class ProductDetailContainer extends Component {
   constructor (props) {
-    super(props);
-
-    this.handleOnAddItem = this.handleOnAddItem.bind(this);
+    super(props)
+    
+    this.handleOnAddItem = this.handleOnAddItem.bind(this)
   }
 
   async componentWillMount () {
-    await this.props.productActions.fetchProducts();
+    await this.props.productActions.fetchProduct(this.props.productId);
   }
 
   handleOnAddItem (item) {
@@ -23,38 +23,37 @@ class ProductListContainer extends Component {
 
   render () {
     return (
-      <ProductList
+      <ProductDetail
+        product={this.props.product}
         loading={this.props.loading}
-        products={this.props.products}
         onAddItem={this.handleOnAddItem}
       />
-    );
+    )
   }
 }
 
-ProductListContainer.defaultProps = {
-  products: []
-};
-
-ProductListContainer.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.object),
+ProductDetailContainer.propTypes = {
+  productId: PropTypes.string.isRequired,
+  product: PropTypes.object,
   loading: PropTypes.bool.isRequired,
   productActions: PropTypes.objectOf(PropTypes.func).isRequired,
   cartActions: PropTypes.objectOf(PropTypes.func).isRequired,
+  onAddItem: PropTypes.func
 };
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   return {
-    products: state.productList.products,
-    loading: state.productList.loading
-  };
+    productId: ownProps.params.productId,
+    product: state.activeProduct.product,
+    loading: state.activeProduct.loading
+  }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     productActions: bindActionCreators(productActions, dispatch),
     cartActions: bindActionCreators(cartActions, dispatch)
-  };
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetailContainer);
